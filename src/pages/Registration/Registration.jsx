@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Button } from '@mui/material';
 import styled from 'styled-components';
 
-import InputField from '../../components/InputField';
-import useAuth from '../../components/useAuth';
+import InputField from 'components/InputField';
+
+import { register } from 'store/actions/authorization';
 
 const Container = styled.div`
     display: flex;
@@ -13,9 +15,9 @@ const Container = styled.div`
     justify-content: flex-end;
 `;
 const FormWrapper = styled.div`
-    background-color: #F2F2F2;
+    background-color: #f9faff;
     width: 30%;
-    padding: 120px;
+    padding: 120px 15% 120px 120px;
 `;
 const Title = styled.p`
     font-size: 24px;
@@ -33,33 +35,33 @@ const Text = styled.p`
     cursor: ${(props) => (props.underline ? 'pointer' : 'default')};
 `;
 const StyledButton = styled(Button)`
-    background-color: #000000 !important;
-    padding: 15px !important;
+  &&& {
+    background-color: #000000;
+    padding: 15px;
+    border-radius: 15px;
+  }
 `;
 
 const Registration = () => {
   const [values, setValues] = useState({
-    login: '',
-    password: '',
+    login: '4',
+    password: '4',
+    username: '4',
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { isLoggedIn } = useSelector((state) => state.authorization);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    await fetch('http://localhost:8000/api/v1/auth/sign-in', {
-      method: 'POST',
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        password_hash: values.login,
-        login: values.login,
-      }),
-    });
-
-    login().then(() => {
-      navigate('/login');
-    });
+    dispatch(register(values, navigate));
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

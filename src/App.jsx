@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
-import Header from './components/Header/Header';
-// import PrivateRoute from './components/PrivateRoute';
-import PublicRoute from './components/PublicRoute';
-import Home from './pages/Home';
-import Login from './pages/Login/Login';
-import Registration from './pages/Registration/Registration';
+import Header from 'components/Header/Header';
+import PublicRoute from 'components/PublicRoute';
+import Home from 'pages/Home';
+import Login from 'pages/Login/Login';
+import Profile from 'pages/Profile/Profile';
+import Registration from 'pages/Registration/Registration';
 
 const App = () => (
   <Router>
@@ -14,15 +14,10 @@ const App = () => (
     <Routes>
       <Route element={<Login />} path="/login" />
       <Route element={<Registration />} path="/registration" />
+      <Route element={<Profile />} path="/profile" />
       <Route element={<PublicRoute />}>
         <Route element={<Home />} path="/" />
       </Route>
-      {/* <PrivateRoute
-            isAuthenticated={isAuthenticated}
-            path="/"
-          >
-            <Route exact element={<Home />} path="/" />
-          </PrivateRoute> */}
     </Routes>
   </Router>
 );

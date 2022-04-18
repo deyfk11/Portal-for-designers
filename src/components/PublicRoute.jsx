@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import useAuth from './useAuth';
-
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isLoggedIn } = useSelector((state) => state.authorization);
 
-  if (!isAuthenticated) {
+  if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
 

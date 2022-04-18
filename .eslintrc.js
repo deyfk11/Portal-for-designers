@@ -12,6 +12,14 @@ module.exports = {
   extends: ['airbnb', 'airbnb/hooks'],
   plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex'],
 
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js',
+      },
+    },
+  },
+
   rules: {
     // экспорт по дефолту, отдаём преимущество именованному экспорту
     'import/prefer-default-export': OFF,
@@ -46,6 +54,7 @@ module.exports = {
       MemberExpression: 1,
       ignoredNodes: ['JSXElement'],
     }],
+    'react-hooks/exhaustive-deps': OFF,
     // базовый отступ для jsx
     'react/jsx-indent': [ERROR, 2, { checkAttributes: true, indentLogicalExpressions: true }],
     // базовый отступ для props
@@ -65,13 +74,7 @@ module.exports = {
     // ++ только для for-цикла
     'no-plusplus': [ERROR, { 'allowForLoopAfterthoughts': true }],
     // наименования переменных, функций и тд только в camelСase
-    'camelcase': [ERROR, {
-      allow: [
-        'UNSAFE_componentDidMount',
-        'UNSAFE_componentWillReceiveProps',
-        'UNSAFE_componentWillUpdate',
-      ],
-    }],
+    'camelcase': OFF,
     // можно писать с большой буквы только имена классов (конструкторов)
     'new-cap': [ERROR, {
       'capIsNewExceptions': [
@@ -202,6 +205,7 @@ module.exports = {
       { blankLine: 'any', prev: 'if', next: 'break' },
     ],
     'max-params': [ERROR, 3],
+    'default-param-last': OFF,
   },
   overrides: [],
 };

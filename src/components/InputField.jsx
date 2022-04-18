@@ -6,21 +6,21 @@ import styled from 'styled-components';
 
 const Input = styled(InputBase)(() => ({
   'label + &': {
-    marginTop: '20px',
+    marginTop: '25px',
   },
   '& .MuiInputBase-input': {
-    'borderRadius': 4,
+    'borderRadius': 15,
     'position': 'relative',
-    'border': '1px solid #ced4da',
+    'border': '1px solid #000000',
     'fontSize': 16,
     'padding': '10px 12px',
   },
 }));
 const Label = styled(InputLabel)`
     &&& {
-        font-size: 16px;
-        color: #000;
-        font-weight: bold;
+      font-size: 18px;
+      color: #000;
+      font-weight: bold;
     }
 `;
 const FormWrapper = styled(FormControl)`

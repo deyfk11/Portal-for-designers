@@ -1,33 +1,65 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
-import styled from 'styled-components';
+import Logo from 'assets/logo.png';
+import styled, { css } from 'styled-components';
 
-import useAuth from '../useAuth';
+import { logout } from 'store/actions/authorization';
 
 const Wrapper = styled.div`
-  display: flex;
-  height: 40px;
-  justify-content: flex-end;
-  margin: 20px 0;
-  align-items: center;
-`;
+  ${({ theme }) => `
+    display: flex;
+    height: 100px;
+    align-items: center;
 
+    @media (min-width: ${theme.breakPoints.xs}) {
+      margin: 0;
+    }
+    @media (min-width: ${theme.breakPoints.md}) {
+      margin: 0 5%;
+      justify-content: space-between;
+    }
+    @media (min-width: ${theme.breakPoints.lg}) {
+      margin: 0 15%;
+      justify-content: space-between;
+    }
+  `}
+`;
 const StyledLink = styled(Link)`
-  margin-right: 20px;
-  height: 20px;
-  color: #000;
+  height: 35px;
+  font-size: 16px;
+  color: ${({ theme: { colors } }) => colors.black};
+  display: inline-block;
+  line-height: 35px;
+  margin-right: ${(props) => !props.highlighted && '20px'};
+
+  ${({ theme: { colors }, highlighted }) => highlighted && css`
+    width: 160px;
+    color: ${colors.white};
+    background-color: ${colors.black};
+    border-radius: 15px;
+    text-align: center;
+  `}
+`;
+const StyledLogo = styled.img`
+  width: 200px;
+  cursor: pointer;
 `;
 
 const Header = () => {
-  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const isAuthenticated = localStorage.getItem('token');
+  const dispatch = useDispatch();
 
   return (
     <Wrapper>
-      <StyledLink to="/">Главная</StyledLink>
-      <StyledLink to="/registration">Регистрация</StyledLink>
-      {/* {!isAuthenticated && <StyledLink to="/login">Авторизация</StyledLink>} */}
-      <StyledLink to="/login">Авторизация</StyledLink>
+      <StyledLogo alt="logo" src={Logo} onClick={() => navigate('/')} />
+      <div>
+        {!isAuthenticated && <StyledLink to="/registration">Регистрация</StyledLink>}
+        {!isAuthenticated && <StyledLink highlighted to="/login">Войти</StyledLink>}
+        {isAuthenticated && <StyledLink highlighted to="#" onClick={() => dispatch(logout(navigate))}>Выйти</StyledLink>}
+      </div>
     </Wrapper>
   );
 };
