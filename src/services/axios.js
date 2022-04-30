@@ -1,9 +1,27 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/v1/';
+import store from 'store/reducers/index';
+
+const API_URL = '/api/v1';
 
 const customAxios = axios.create({
   baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+customAxios.interceptors.request.use(
+  (config) => {
+    const { authorization: { token } } = store.getState();
+
+    config.headers.Authorization = `Bearer ${token}`;
+
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  },
+);
 
 export default customAxios;

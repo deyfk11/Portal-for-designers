@@ -1,28 +1,23 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
 
-// eslint-disable-next-line react/prop-types
-function PrivateRoute({ children, isAuthenticated, ...rest }) {
-  return (
-    <Route
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...rest}
-      render={
-        ({ location }) => (
-          isAuthenticated
-            ? (
-              children
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/login',
-                  state: { from: location },
-                }}
-              />
-            ))
-      }
-    />
-  );
-}
+const PrivateRoute = ({ children }) => {
+  const { roleId, isLoggedIn } = useSelector((state) => state.authorization);
+
+  if (roleId !== 1 && !isLoggedIn) {
+    return <Navigate to="/profile" />;
+  }
+
+  return children || <Outlet />;
+};
 
 export default PrivateRoute;
+
+PrivateRoute.defaultProps = {
+  children: undefined,
+};
+PrivateRoute.propTypes = {
+  children: PropTypes.element,
+};

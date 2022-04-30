@@ -44,8 +44,8 @@ const StyledButton = styled(Button)`
 
 const Login = () => {
   const [values, setValues] = useState({
-    login: '',
-    password: '',
+    login: 'add',
+    password: 'add',
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();

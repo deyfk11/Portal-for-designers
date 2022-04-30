@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Logo from 'assets/logo.png';
 import styled, { css } from 'styled-components';
 
+import Logo from 'assets/logo.png';
 import { logout } from 'store/actions/authorization';
 
 const Wrapper = styled.div`
@@ -32,9 +32,9 @@ const StyledLink = styled(Link)`
   color: ${({ theme: { colors } }) => colors.black};
   display: inline-block;
   line-height: 35px;
-  margin-right: ${(props) => !props.highlighted && '20px'};
+  margin-right: ${(props) => !props.$highlighted && '20px'};
 
-  ${({ theme: { colors }, highlighted }) => highlighted && css`
+  ${({ theme: { colors }, $highlighted }) => $highlighted && css`
     width: 160px;
     color: ${colors.white};
     background-color: ${colors.black};
@@ -49,16 +49,18 @@ const StyledLogo = styled.img`
 
 const Header = () => {
   const navigate = useNavigate();
-  const isAuthenticated = localStorage.getItem('token');
+  const { roleId, isLoggedIn } = useSelector((state) => state.authorization);
   const dispatch = useDispatch();
 
   return (
     <Wrapper>
       <StyledLogo alt="logo" src={Logo} onClick={() => navigate('/')} />
       <div>
-        {!isAuthenticated && <StyledLink to="/registration">Регистрация</StyledLink>}
-        {!isAuthenticated && <StyledLink highlighted to="/login">Войти</StyledLink>}
-        {isAuthenticated && <StyledLink highlighted to="#" onClick={() => dispatch(logout(navigate))}>Выйти</StyledLink>}
+        {!isLoggedIn && <StyledLink to="/registration">Регистрация</StyledLink>}
+        {!isLoggedIn && <StyledLink $highlighted to="/login">Войти</StyledLink>}
+        {isLoggedIn && roleId === 1 && <StyledLink to="/adminPanel">Пользователи</StyledLink>}
+        {isLoggedIn && <StyledLink to="/profile">Профиль</StyledLink>}
+        {isLoggedIn && <StyledLink $highlighted to="#" onClick={() => dispatch(logout(navigate))}>Выйти</StyledLink>}
       </div>
     </Wrapper>
   );

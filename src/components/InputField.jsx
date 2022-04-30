@@ -47,6 +47,7 @@ const InputField = ({ label, autoComplete, required, name, value, onChange }) =>
 );
 
 export default InputField;
+
 InputField.defaultProps = {
   autoComplete: '',
   name: '',

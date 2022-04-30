@@ -1,11 +1,20 @@
+import jwt_decode from 'jwt-decode';
+
 import { LOGIN_SUCCESS, REGISTER_SUCCESS, LOGOUT } from 'store/actions/actionTypes';
 
 const token = localStorage.getItem('token');
+
+const decode = (name) => {
+  if (!token) return null;
+
+  return jwt_decode(token)[name];
+};
+
 const initialState = {
   token,
   isLoggedIn: !!token,
-  userId: null,
-  roleId: null,
+  roleId: decode('role_id'),
+  userId: decode('user_id'),
 };
 
 export const authorizationReducer = (state = initialState, action) => {

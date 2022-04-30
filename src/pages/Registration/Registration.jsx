@@ -77,6 +77,14 @@ const Registration = () => {
           <InputField
             fullWidth
             required
+            label="Никнейм"
+            name="username"
+            value={values.username}
+            onChange={handleChange}
+          />
+          <InputField
+            fullWidth
+            required
             label="Логин"
             name="login"
             value={values.login}

@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
   mode,
@@ -35,6 +36,12 @@ module.exports = {
     historyApiFallback: true,
     open: true,
     port: '3000',
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:8000',
+        secure: false,
+      },
+    },
   },
 
   module: {
@@ -71,5 +78,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new WebpackNotifierPlugin(),
   ],
 };
