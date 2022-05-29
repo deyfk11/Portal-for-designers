@@ -7,23 +7,39 @@ import Modal from '@mui/material/Modal';
 import styled from 'styled-components';
 
 const Title = styled.p`
-  font-size: 24px;
-  font-weight: bold;
+  ${({ theme }) => `
+    font-size: 20px;
+    font-weight: bold;
+
+    @media (min-width: ${theme.breakPoints.lg}) {
+      font-size: 24px;
+    }
+  `}
 `;
 const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  height: 300px;
-  background-color: #FFFFFF;
-  outline: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #000000;
-  border-radius: 20px;
+  ${({ theme }) => `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: auto;
+    background-color: #FFFFFF;
+    outline: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #000000;
+    border-radius: 20px;
+
+    @media (min-width: ${theme.breakPoints.sm}) {
+      width: 60%;
+    }
+
+    @media (min-width: ${theme.breakPoints.lg}) {
+      width: 40%;
+    }
+  `}
 `;
 const StyledIconButton = styled(IconButton)`
   align-self: flex-end;
@@ -51,10 +67,12 @@ const BasicModal = ({ open, setOpen, title, children }) => {
 
 export default BasicModal;
 BasicModal.defaultProps = {
+  children: undefined,
   title: '',
 };
 BasicModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  children: PropTypes.element,
   title: PropTypes.string,
 };

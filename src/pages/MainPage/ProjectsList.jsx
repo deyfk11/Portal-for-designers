@@ -1,14 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
 import styled from 'styled-components';
-
-import EditProject from 'pages/EditProject/EditProject';
-import DeleteProjectModal from 'pages/Profile/DeleteProjectModal';
 
 const Wrapper = styled.div`
   ${({ theme }) => `
@@ -73,65 +67,21 @@ const Title = styled.div`
     }
   `}
 `;
-const IconsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  top: 5px;
-  right: 8px;
-  z-index: 2;
-  color: #FFFFFF;
-  width: 95%;
-`;
 
-const ProjectsList = ({ projects, isEditMode, userId }) => {
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [activeProject, setActiveProject] = useState(null);
+const ProjectsList = ({ projects }) => {
   const navigate = useNavigate();
 
   return (
     <Wrapper>
       {projects.map(((project) => (
-        <Container key={project.id} onClick={() => navigate(`/project/${project.id}`, { state: `/profile/${userId}` })}>
+        <Container key={project.id} onClick={() => navigate(`/project/${project.id}`)}>
           <ImageInner>
-            {isEditMode && (
-              <IconsWrapper>
-                <IconButton
-                  color="inherit"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    navigate(`/editProject/${project.id}`);
-                  }}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  color="inherit"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setActiveProject(project);
-                    setOpenDeleteModal(true);
-                  }}
-                >
-                  <DeleteOutlineIcon />
-                </IconButton>
-              </IconsWrapper>
-            )}
             <StyledImage src={project.images[0]} />
           </ImageInner>
           <Title>{project.title}</Title>
-          <Text>{project.description}</Text>
+          <Text>{project.username}</Text>
         </Container>
       )))}
-      {activeProject
-      && (
-        <DeleteProjectModal
-          activeProject={activeProject}
-          open={openDeleteModal}
-          setActiveProject={setActiveProject}
-          setOpen={setOpenDeleteModal}
-        />
-      )}
     </Wrapper>
   );
 };
@@ -139,12 +89,11 @@ const ProjectsList = ({ projects, isEditMode, userId }) => {
 export default ProjectsList;
 
 ProjectsList.propTypes = {
-  isEditMode: PropTypes.bool.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(PropTypes.string),
   })).isRequired,
-  userId: PropTypes.string.isRequired,
 };

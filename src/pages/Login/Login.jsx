@@ -6,46 +6,85 @@ import { Box, Button } from '@mui/material';
 import styled from 'styled-components';
 
 import InputField from 'components/InputField';
+import { device } from 'components/Theme';
 
+import AuthLogo from 'assets/auth_logo.svg';
 import { login } from 'store/actions/authorization';
 
 const Container = styled.div`
-    display: flex;
-    height: 700px;
-    justify-content: flex-end;
+  display: flex;
 `;
 const FormWrapper = styled.div`
-    background-color: #f9faff;
+  background-color: #f9faff;
+  width: 100%;
+  padding: 60px 30px;
+
+  @media ${device.sm} {
+    padding: 80px 26%;
+  }
+
+  @media ${device.lg} {
+    width: 40%;
+    padding: 120px 15% 80px 120px;
+  }
+
+  @media ${device.xl} {
     width: 30%;
-    padding: 120px 15% 120px 120px;
+  }
 `;
 const Title = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 25px;
+
+  @media ${device.lg} {
     font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 25px;
+  }
 `;
 const TextWrapper = styled.div`
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 const Text = styled.p`
+  font-size: 14px;
+  padding: 0 5px;
+  text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
+  cursor: ${(props) => (props.underline ? 'pointer' : 'default')};
+  font-weight: ${(props) => (props.underline ? '600' : '400')};
+  margin-bottom: 10px;
+
+  @media ${device.lg} {
     font-size: 16px;
-    padding: 0 5px;
-    text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
-    cursor: ${(props) => (props.underline ? 'pointer' : 'default')};
+  }
 `;
 const StyledButton = styled(Button)`
   &&& {
     background-color: #000000;
     padding: 15px;
     border-radius: 15px;
+    font-size: 14px;
+    
+    @media ${device.lg} {
+      font-size: 16px;
+    }
+  }
+`;
+const StyledImage = styled.div`
+  display: none;
+
+  @media ${device.lg} {
+    display: block;
+    background: url(${AuthLogo}) no-repeat;
+    background-size: cover;
+    width: 50%;
   }
 `;
 
 const Login = () => {
   const [values, setValues] = useState({
-    login: 'add',
-    password: 'add',
+    login: 'adm',
+    password: 'adm',
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -70,6 +109,7 @@ const Login = () => {
 
   return (
     <Container>
+      <StyledImage />
       <FormWrapper>
         <Title>Вход</Title>
         <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit}>
@@ -87,6 +127,7 @@ const Login = () => {
             autoComplete="current-password"
             label="Пароль"
             name="password"
+            type="password"
             value={values.password}
             onChange={handleChange}
           />

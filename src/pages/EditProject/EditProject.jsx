@@ -147,8 +147,8 @@ const ImageList = styled.div`
 const AddProject = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    title: '',
-    description: 'Photoshop',
+    title: 'Дизайн мобильного приложения',
+    description: 'Используемые технологии',
     files: [],
   });
   const dispatch = useDispatch();
@@ -181,7 +181,7 @@ const AddProject = () => {
 
   return (
     <Container>
-      <Title>Добавить проект</Title>
+      <Title>Редактировать проект</Title>
       <FormWrapper onSubmit={handleSubmit}>
         <ImageUploading
           multiple

@@ -1,8 +1,9 @@
-import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT } from 'store/actions/actionTypes';
+import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT } from 'store/actions/actionTypes';
 
 const initialState = {
   projectsById: [],
   allProjects: [],
+  project: {},
 };
 
 export const projectsReducer = (state = initialState, action) => {
@@ -13,13 +14,23 @@ export const projectsReducer = (state = initialState, action) => {
       return state;
     case DELETE_PROJECT:
       return {
-        ...state.allProjects,
+        ...state,
         projectsById: state.projectsById.filter((project) => project.id !== payload),
       };
     case GET_PROJECTS_BY_ID:
       return {
-        ...state.allProjects,
+        ...state,
         projectsById: payload,
+      };
+    case GET_ALL_PROJECTS:
+      return {
+        ...state,
+        allProjects: payload,
+      };
+    case GET_PROJECT:
+      return {
+        ...state,
+        project: payload,
       };
     default:
       return state;

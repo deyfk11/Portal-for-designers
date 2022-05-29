@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -28,11 +28,17 @@ const Avatar = styled.div`
   width: 50px;
   height: 50px;
 `;
+const ProfileImage = styled.img`
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+`;
 const IconWrapper = styled.button`
   cursor: pointer;
 `;
 const Text = styled.p`
   font-size: 20px;
+  cursor: pointer;
 `;
 const LeftGroup = styled.div`
   display: flex;
@@ -41,12 +47,13 @@ const LeftGroup = styled.div`
 
 const UserProfile = ({ user }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
       <LeftGroup>
-        <Avatar />
-        <Text>{user.login}</Text>
+        <ProfileImage src={user.profile_image} />
+        <Text onClick={() => navigate(`/profile/${user.id}`)}>{user.login}</Text>
       </LeftGroup>
       <IconWrapper onClick={() => dispatch(deleteUser(user.id))}>
         <DeleteIcon />
@@ -59,8 +66,9 @@ export default UserProfile;
 
 UserProfile.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     login: PropTypes.string.isRequired,
+    profile_image: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
   }).isRequired,
 };

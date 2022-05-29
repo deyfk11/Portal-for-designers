@@ -17,11 +17,17 @@ const Input = styled(InputBase)(() => ({
   },
 }));
 const Label = styled(InputLabel)`
+  ${({ theme }) => `
     &&& {
-      font-size: 18px;
+      font-size: 16px;
       color: #000;
       font-weight: bold;
     }
+
+    @media (min-width: ${theme.breakPoints.lg}) {
+      font-size: 18px !important;
+    }
+  `}
 `;
 const FormWrapper = styled(FormControl)`
     &&& {
@@ -30,7 +36,7 @@ const FormWrapper = styled(FormControl)`
     }
 `;
 
-const InputField = ({ label, autoComplete, required, name, value, onChange }) => (
+const InputField = ({ label, autoComplete, required, name, value, onChange, multiline, rows, type = '' }) => (
   <FormWrapper variant="standard">
     <Label shrink htmlFor="inputField">
       {label}
@@ -38,8 +44,11 @@ const InputField = ({ label, autoComplete, required, name, value, onChange }) =>
     <Input
       autoComplete={autoComplete}
       id="inputField"
+      multiline={multiline}
       name={name}
       required={required}
+      rows={rows}
+      type={type}
       value={value}
       onChange={onChange}
     />
@@ -50,14 +59,20 @@ export default InputField;
 
 InputField.defaultProps = {
   autoComplete: '',
+  multiline: false,
   name: '',
   required: false,
+  rows: 0,
+  type: '',
 };
 InputField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   autoComplete: PropTypes.string,
+  multiline: PropTypes.bool,
   name: PropTypes.string,
   required: PropTypes.bool,
+  rows: PropTypes.number,
+  type: PropTypes.string,
 };
