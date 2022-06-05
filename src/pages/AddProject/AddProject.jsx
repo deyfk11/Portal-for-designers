@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -146,14 +146,15 @@ const ImageList = styled.div`
 
 const AddProject = () => {
   const navigate = useNavigate();
+  const { userId } = useSelector((state) => state.authorization);
   const [values, setValues] = useState({
     title: '',
-    description: 'Photoshop',
+    description: '',
     files: [],
   });
   const dispatch = useDispatch();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formdata = new FormData();
 
@@ -166,7 +167,7 @@ const AddProject = () => {
     }
 
     formdata.append('PostInfo', `{\n  "description": "${values.description}",\n  "title": "${values.title}"\n}`);
-    dispatch(addProject(formdata, navigate));
+    dispatch(addProject(formdata, navigate, userId));
   };
 
   const handleChange = (event) => {

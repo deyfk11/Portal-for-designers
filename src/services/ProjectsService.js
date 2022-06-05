@@ -11,7 +11,10 @@ const getProjectsById = (id) => axios.get(`/posts/users/${id}`)
 const getProject = (id) => axios.get(`/posts/${id}`)
   .then((response) => response.data);
 
-const getAllProjects = (limit, offset, sorting = 'asc') => axios.get(
+const updateProject = (values, projectId) => axios.put(`/posts/${projectId}`, values, { headers: { 'Content-Type': 'multipart/form-data' } })
+  .then((response) => response.data);
+
+const getAllProjects = (limit, offset, sorting = 'asc') => axios.post(
   '/posts/users/',
   { params: {
     limit,
@@ -21,4 +24,4 @@ const getAllProjects = (limit, offset, sorting = 'asc') => axios.get(
 )
   .then((response) => response.data);
 
-export default { addProject, getProjectsById, deleteProject, getAllProjects, getProject };
+export default { addProject, getProjectsById, deleteProject, getAllProjects, getProject, updateProject };

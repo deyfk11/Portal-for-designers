@@ -9,4 +9,7 @@ const getUserById = (id) => axios.get(`/users/${id}`)
 const deleteUser = (id) => axios.delete(`/users/${id}`)
   .then((response) => response.data);
 
-export default { getAllUsers, deleteUser, getUserById };
+const updateProfile = (values) => axios.put('/users/', values, { headers: { 'Content-Type': 'multipart/form-data' } })
+  .then((response) => response.data);
+
+export default { getAllUsers, deleteUser, getUserById, updateProfile };

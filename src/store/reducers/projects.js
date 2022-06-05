@@ -1,4 +1,4 @@
-import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT } from 'store/actions/actionTypes';
+import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT, UPDATE_PROJECT } from 'store/actions/actionTypes';
 
 const initialState = {
   projectsById: [],
@@ -31,6 +31,10 @@ export const projectsReducer = (state = initialState, action) => {
       return {
         ...state,
         project: payload,
+      };
+    case UPDATE_PROJECT:
+      return {
+        ...state,
       };
     default:
       return state;

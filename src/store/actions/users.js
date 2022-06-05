@@ -1,6 +1,6 @@
 import UsersService from 'services/UsersService';
 
-import { GET_ALL_USERS, DELETE_USER, GET_USER_BY_ID } from './actionTypes';
+import { GET_ALL_USERS, DELETE_USER, GET_USER_BY_ID, UPDATE_PROFILE } from './actionTypes';
 
 export const getAllUsers = () => (dispatch) => (
   UsersService.getAllUsers().then((response) => {
@@ -8,14 +8,23 @@ export const getAllUsers = () => (dispatch) => (
   })
 );
 
-export const getUserById = (id) => (dispatch) => (
+export const getUserById = (id, setIsEditMode) => (dispatch) => (
   UsersService.getUserById(id).then((response) => {
     dispatch({ type: GET_USER_BY_ID, payload: response });
+    setIsEditMode(false);
   })
 );
 
 export const deleteUser = (id) => (dispatch) => (
   UsersService.deleteUser(id).then(() => {
     dispatch({ type: DELETE_USER, payload: id });
+  })
+);
+
+export const updateProfile = (values, setOpen, id, setIsEditMode) => (dispatch) => (
+  UsersService.updateProfile(values).then((response) => {
+    dispatch({ type: UPDATE_PROFILE, payload: response.data });
+    dispatch(getUserById(id, setIsEditMode));
+    setOpen(false);
   })
 );

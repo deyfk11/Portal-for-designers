@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Button } from '@mui/material';
@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import InputField from 'components/InputField';
 import { device } from 'components/Theme';
 
-import { addProject } from 'store/actions/projects';
+import { getProject, updateProject } from 'store/actions/projects';
 
 const Container = styled.div`
   display: flex;
@@ -147,13 +147,26 @@ const ImageList = styled.div`
 const AddProject = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    title: 'Дизайн мобильного приложения',
-    description: 'Используемые технологии',
+    title: '',
+    description: '',
     files: [],
   });
   const dispatch = useDispatch();
+  const { project } = useSelector((state) => state.projects);
+  const { id } = useParams();
 
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    dispatch(getProject(id));
+  }, [id]);
+  useEffect(() => {
+    setValues({
+      title: project.title,
+      description: project.description,
+      files: [],
+    });
+  }, [project]);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formdata = new FormData();
 
@@ -165,8 +178,8 @@ const AddProject = () => {
       }
     }
 
-    formdata.append('PostInfo', `{\n  "description": "${values.description}",\n  "title": "${values.title}"\n}`);
-    dispatch(addProject(formdata, navigate));
+    formdata.append('Json', `{\n  "description": "${values.description}",\n  "title": "${values.title}"\n}`);
+    dispatch(updateProject(formdata, navigate, id, project.user_id));
   };
 
   const handleChange = (event) => {
@@ -185,8 +198,9 @@ const AddProject = () => {
       <FormWrapper onSubmit={handleSubmit}>
         <ImageUploading
           multiple
+          acceptType={['jpeg', 'png']}
           dataURLKey="data_url"
-          maxNumber={20}
+          maxNumber={10}
           value={values.files}
           onChange={handleFileChange}
         >
@@ -201,7 +215,7 @@ const AddProject = () => {
               <ImageList>
                 {imageList.map((image, index) => (
                   <ImageWrapper key={index}>
-                    <Image alt="" src={image.data_url} width="100" />
+                    <Image alt="" src={image.data_url || image} width="100" />
                     <IconWrapper>
                       <DeleteOutlineIcon onClick={(event) => {
                         event.stopPropagation();

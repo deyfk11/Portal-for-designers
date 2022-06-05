@@ -83,8 +83,8 @@ const StyledImage = styled.div`
 
 const Login = () => {
   const [values, setValues] = useState({
-    login: 'adm',
-    password: 'adm',
+    login: '',
+    password: '',
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();

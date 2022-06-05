@@ -1,11 +1,11 @@
 import ProjectsService from 'services/ProjectsService';
 
-import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT } from './actionTypes';
+import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT, UPDATE_PROJECT } from './actionTypes';
 
-export const addProject = (values, navigate) => (dispatch) => (
+export const addProject = (values, navigate, userId) => (dispatch) => (
   ProjectsService.addProject(values).then((response) => {
     dispatch({ type: ADD_PROJECT, payload: response.data });
-    navigate('/profile');
+    navigate(`/profile/${userId}`);
   })
 );
 
@@ -27,8 +27,15 @@ export const getProject = (id) => (dispatch) => (
   })
 );
 
-export const getAllProjects = (limit, offset, navigate) => (dispatch) => (
+export const getAllProjects = (limit, offset) => (dispatch) => (
   ProjectsService.getAllProjects(limit, offset).then((response) => {
     dispatch({ type: GET_ALL_PROJECTS, payload: response.posts });
+  })
+);
+
+export const updateProject = (values, navigate, projectId, userId) => (dispatch) => (
+  ProjectsService.updateProject(values, projectId).then((response) => {
+    dispatch({ type: UPDATE_PROJECT, payload: response.data });
+    navigate(`/profile/${userId}`);
   })
 );

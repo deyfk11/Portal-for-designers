@@ -20,17 +20,16 @@ const App = () => (
     <Routes>
       <Route element={<Login />} path="/login" />
       <Route element={<Registration />} path="/registration" />
+      <Route element={<MainPage />} path="/" />
+      <Route exact element={<Profile />} path="/profile/:id" />
+      <Route exact element={<ProjectPage />} path="/project/:id" />
       <Route element={<PublicRoute />}>
-        <Route element={<Profile />} path="/profile/:id" />
         <Route element={<AddProject />} path="/addProject" />
-        <Route element={<MainPage />} path="/" />
-        <Route element={<ProjectPage />} path="/project/:id" />
-        <Route element={<EditProject />} path="/editProject/:id" />
+        <Route exact element={<EditProject />} path="/editProject/:id" />
       </Route>
       <Route element={<PrivateRoute />}>
         <Route element={<AdminPanel />} path="/adminPanel" />
       </Route>
-      <Route element={<MainPage />} path="*" />
     </Routes>
     <Footer />
   </Router>

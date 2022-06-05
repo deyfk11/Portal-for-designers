@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import plural from 'plural-ru';
 import styled from 'styled-components';
+
+import EditAvatarModal from 'pages/Profile/EditAvatarModal';
 
 import { getProjectsById } from 'store/actions/projects';
 import { getUserById } from 'store/actions/users';
 
-import ProfileNotFound from './ProfileNotFound';
 import ProjectsList from './ProjectsList';
 
 const Wrapper = styled.div`
@@ -65,6 +67,23 @@ const StyledButton = styled.button`
     }
   `}
 `;
+const StyledPhotoIcon = styled(AddAPhotoIcon)`
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  align-self: center;
+`;
+const IconWrapper = styled.div`
+  width: 160px;
+  height: 160px;
+  align-self: center;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  cursor: pointer;
+`;
 
 const Profile = () => {
   const { id } = useParams();
@@ -73,28 +92,43 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { projectsById } = useSelector((state) => state.projects);
   const { userById } = useSelector((state) => state.allUsers);
-  const { roleId } = useSelector((state) => state.authorization);
+  const { roleId, userId } = useSelector((state) => state.authorization);
+  const [openEditAvatarModal, setOpenditAvatarModal] = useState(false);
 
   useEffect(() => {
     dispatch(getProjectsById(id));
     dispatch(getUserById(id));
-  }, []);
+  }, [id]);
 
   return (
     <Wrapper>
       {userById.id && userById.id !== 0 && (
         <>
-          <ProfileImage alt="Profile image" src={userById.profile_image} />
+          {isEditMode
+            ? (
+              <IconWrapper onClick={() => setOpenditAvatarModal(true)}>
+                <StyledPhotoIcon />
+              </IconWrapper>
+            )
+            : <ProfileImage alt="Profile image" src={userById.profile_image} />}
           <Text $title>{userById.username}</Text>
           <Text>
             {projectsById.length}
             {' '}
             {plural(projectsById.length, 'проект', 'проекта', 'проектов')}
           </Text>
-          {userById.id.toString() === id && <StyledButton $addProject onClick={() => navigate('/addProject')}>Добавить проект</StyledButton>}
-          {(userById.id.toString() === id || roleId === 1)
+          {userId.toString() === id && <StyledButton $addProject onClick={() => navigate('/addProject')}>Добавить проект</StyledButton>}
+          {(userId.toString() === id || roleId === 1)
           && <StyledButton onClick={() => setIsEditMode(!isEditMode)}>Редактировать профиль</StyledButton>}
           <ProjectsList isEditMode={isEditMode} projects={projectsById} userId={id} />
+          {isEditMode && (
+            <EditAvatarModal
+              id={id}
+              open={openEditAvatarModal}
+              setIsEditMode={setIsEditMode}
+              setOpen={setOpenditAvatarModal}
+            />
+          )}
         </>
       )}
     </Wrapper>

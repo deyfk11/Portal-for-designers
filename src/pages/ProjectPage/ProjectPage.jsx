@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import PageNotFound from 'pages/PageNotFound';
+
 import { getProject } from 'store/actions/projects';
 
 import ImageList from './ImageList';
@@ -50,7 +52,7 @@ const ProjectPage = () => {
             <ImageList images={project.images} />
           </div>
         )
-        : <ProjectNotFound />}
+        : <PageNotFound />}
     </Wrapper>
   );
 };

@@ -7,6 +7,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import styled from 'styled-components';
 
+import { device } from 'components/Theme';
+
 import Logo from 'assets/logo.png';
 import { logout } from 'store/actions/authorization';
 
@@ -60,17 +62,16 @@ const StyledLogo = styled.img`
   cursor: pointer;
 `;
 const MobileNavBar = styled.div`
-  ${({ theme, $openNavMenu, $scrolledPixels }) => `
+  ${({ theme, $openNavMenu }) => `
     background-color: #FFFFFF;
     max-width: 320px;
     width: 100vw;
     height: 100vh;
     display: ${$openNavMenu ? 'flex' : 'none'};
     position: fixed;
-    top: ${$scrolledPixels < 100 ? `calc(100px -  ${$scrolledPixels}px)` : '-10px'};
+    top: 0;
     right: 0;
     flex-direction: column;
-    padding-top: 80px;
     z-index: 3;
 
     @media (min-width: ${theme.breakPoints.xss}) {
@@ -98,18 +99,22 @@ const Container = styled.div`
     }
   `}
 `;
+const StyledCloseIcon = styled(CloseIcon)`
+  margin-left: auto;
+  padding: 40px 30px 40px 0px;
+  @media ${device.xss} {
+    margin: 0 auto;
+    padding: 40px 0px 60px 75px;
+  }
+  cursor: pointer;
+`;
 
 const Header = () => {
   const drawerRef = useRef();
   const [openNavMenu, setOpenNavMenu] = useState(false);
-  const [scrolledPixels, setScrolledPixels] = useState(0);
   const navigate = useNavigate();
   const { roleId, isLoggedIn, userId } = useSelector((state) => state.authorization);
   const dispatch = useDispatch();
-
-  window.onscroll = () => {
-    setScrolledPixels(window.scrollY);
-  };
 
   const handleClick = () => {
     setOpenNavMenu(!openNavMenu);
@@ -153,8 +158,9 @@ const Header = () => {
         >
           {openNavMenu ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
-        <MobileNavBar $openNavMenu={openNavMenu} $scrolledPixels={scrolledPixels} ref={drawerRef}>
-          {isLoggedIn && <StyledLink to="/">Главная</StyledLink>}
+        <MobileNavBar $openNavMenu={openNavMenu} ref={drawerRef}>
+          <StyledCloseIcon onClick={handleClick} />
+          <StyledLink to="/">Главная</StyledLink>
           {!isLoggedIn && <StyledLink to="/registration">Регистрация</StyledLink>}
           {!isLoggedIn && <StyledLink $highlighted to="/login">Войти</StyledLink>}
           {isLoggedIn && roleId === 1 && <StyledLink to="/adminPanel">Пользователи</StyledLink>}
@@ -163,7 +169,7 @@ const Header = () => {
         </MobileNavBar>
       </MobileContainer>
       <Container>
-        {isLoggedIn && <StyledLink to="/">Главная</StyledLink>}
+        <StyledLink to="/">Главная</StyledLink>
         {!isLoggedIn && <StyledLink to="/registration">Регистрация</StyledLink>}
         {!isLoggedIn && <StyledLink $highlighted to="/login">Войти</StyledLink>}
         {isLoggedIn && roleId === 1 && <StyledLink to="/adminPanel">Пользователи</StyledLink>}
