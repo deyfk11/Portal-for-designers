@@ -27,7 +27,7 @@ export const getProject = (id) => (dispatch) => (
   })
 );
 
-export const getAllProjects = (limit, offset, navigate) => (dispatch) => (
+export const getAllProjects = (limit, offset) => (dispatch) => (
   ProjectsService.getAllProjects(limit, offset).then((response) => {
     dispatch({ type: GET_ALL_PROJECTS, payload: response.posts });
   })

@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { getProjectsById } from 'store/actions/projects';
 import { getUserById } from 'store/actions/users';
 
-import ProfileNotFound from './ProfileNotFound';
 import ProjectsList from './ProjectsList';
 
 const Wrapper = styled.div`

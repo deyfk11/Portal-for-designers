@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 
@@ -31,13 +31,11 @@ const Text = styled.p`
   `}
 `;
 const Wrapper = styled.div`
-  ${({ theme }) => `
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
     padding: 30px 20px 20px 20px;
-  `}
 `;
 const StyledButton = styled.button`
   ${({ theme, $remove }) => `

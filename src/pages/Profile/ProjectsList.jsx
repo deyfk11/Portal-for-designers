@@ -7,7 +7,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import styled from 'styled-components';
 
-import EditProject from 'pages/EditProject/EditProject';
 import DeleteProjectModal from 'pages/Profile/DeleteProjectModal';
 
 const Wrapper = styled.div`

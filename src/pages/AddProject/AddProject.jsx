@@ -167,8 +167,6 @@ const AddProject = () => {
     }
 
     formdata.append('PostInfo', `{\n  "description": "${values.description}",\n  "title": "${values.title}"\n}`);
-    console.log(userId);
-    debugger;
   };
 
   const handleChange = (event) => {

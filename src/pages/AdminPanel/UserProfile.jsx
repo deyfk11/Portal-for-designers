@@ -22,12 +22,6 @@ const Wrapper = styled.div`
         margin: 20px 0;
     `}
 `;
-const Avatar = styled.div`
-  background-color: black;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-`;
 const ProfileImage = styled.img`
   border-radius: 50%;
   width: 50px;
