@@ -1,6 +1,6 @@
 import ProjectsService from 'services/ProjectsService';
 
-import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT } from './actionTypes';
+import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT } from './actionTypes';
 
 export const addProject = (values, navigate) => (dispatch) => (
   ProjectsService.addProject(values).then((response) => {
@@ -18,5 +18,17 @@ export const deleteProject = (id) => (dispatch) => (
 export const getProjectsById = (id) => (dispatch) => (
   ProjectsService.getProjectsById(id).then((response) => {
     dispatch({ type: GET_PROJECTS_BY_ID, payload: response.user_posts });
+  })
+);
+
+export const getProject = (id) => (dispatch) => (
+  ProjectsService.getProject(id).then((response) => {
+    dispatch({ type: GET_PROJECT, payload: response });
+  })
+);
+
+export const getAllProjects = (limit, offset, navigate) => (dispatch) => (
+  ProjectsService.getAllProjects(limit, offset).then((response) => {
+    dispatch({ type: GET_ALL_PROJECTS, payload: response.posts });
   })
 );

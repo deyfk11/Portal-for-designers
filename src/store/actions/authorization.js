@@ -7,13 +7,13 @@ import { REGISTER_SUCCESS, LOGIN_SUCCESS, LOGOUT } from './actionTypes';
 export const login = (values) => (dispatch) => (
   AuthService.login(values)
     .then((response) => {
-      const { token } = response.data;
-      const decode = jwt_decode(token);
+      const { access_token } = response.data;
+      const decode = jwt_decode(access_token);
 
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', access_token);
       dispatch({ type: LOGIN_SUCCESS,
         payload: {
-          token,
+          token: access_token,
           roleId: decode.role_id,
           userId: decode.user_id,
         } });

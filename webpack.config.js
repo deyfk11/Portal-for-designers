@@ -6,7 +6,6 @@ if (process.env.NODE_ENV === 'production') {
   mode = 'production';
 }
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
@@ -75,9 +74,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
     new WebpackNotifierPlugin(),
   ],
 };
