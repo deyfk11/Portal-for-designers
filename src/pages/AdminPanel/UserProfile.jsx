@@ -6,21 +6,30 @@ import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 
+import { device } from 'components/Theme';
+
 import { deleteUser } from 'store/actions/users';
 
 const Wrapper = styled.div`
-    ${({ theme }) => `
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: ${theme.colors.white};
-        padding: 15px;
-        box-sizing: border-box;
-        border-radius: 10px;
-        height: 90px;
+  ${({ theme }) => `
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: ${theme.colors.white};
+      padding: 15px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      height: 90px;
+      width: 100%;
+      margin: 20px 0;
+      
+      @media ${device.sm} {
+        width: 70%;
+      }
+      @media ${device.lg} {
         width: 47%;
-        margin: 20px 0;
-    `}
+      }
+  `}
 `;
 const ProfileImage = styled.img`
   border-radius: 50%;

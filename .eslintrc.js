@@ -8,6 +8,9 @@ module.exports = {
     node: true,
     browser: true,
   },
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
 
   extends: ['airbnb', 'airbnb/hooks'],
   plugins: ['babel', 'import', 'jsx-a11y', 'react', 'react-hooks', 'compat', 'sonarjs', 'optimize-regex'],
@@ -204,7 +207,6 @@ module.exports = {
       { blankLine: 'never', prev: '*', next: ['break', 'default'] },
       { blankLine: 'any', prev: 'if', next: 'break' },
     ],
-    'max-params': [ERROR, 3],
     'default-param-last': OFF,
   },
   overrides: [],

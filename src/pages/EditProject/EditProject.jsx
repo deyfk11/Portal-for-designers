@@ -147,8 +147,8 @@ const ImageList = styled.div`
 const AddProject = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    title: 'Дизайн мобильного приложения',
-    description: 'Используемые технологии',
+    title: '',
+    description: '',
     files: [],
   });
   const dispatch = useDispatch();

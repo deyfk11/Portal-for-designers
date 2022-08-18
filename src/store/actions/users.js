@@ -19,3 +19,11 @@ export const deleteUser = (id) => (dispatch) => (
     dispatch({ type: DELETE_USER, payload: id });
   })
 );
+
+export const updateProfile = (values, setOpen, id, setIsEditMode) => (dispatch) => (
+  UsersService.updateProfile(values).then((response) => {
+    dispatch({ type: UPDATE_PROFILE, payload: response.data });
+    dispatch(getUserById(id, setIsEditMode));
+    setOpen(false);
+  })
+);

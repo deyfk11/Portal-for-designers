@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import { device } from 'components/Theme';
 import UserProfile from 'pages/AdminPanel/UserProfile';
 
 import { getAllUsers } from 'store/actions/users';
@@ -16,14 +16,14 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
     background-color: ${theme.colors.circon};
     div:nth-child(odd) {
-        margin-right: 10px;
+      margin-right: 10px;
     }
     
-    @media (min-width: ${theme.breakPoints.lg}) {
+    @media ${device.lg} {
       padding: 50px 15%;
       justify-content: space-between;
       div:nth-child(odd) {
-          margin-right: 20px;
+        margin-right: 20px;
       }
     }
   `}

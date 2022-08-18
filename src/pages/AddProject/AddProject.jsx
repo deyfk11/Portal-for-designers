@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-import React, { useId, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -149,12 +149,12 @@ const AddProject = () => {
   const { userId } = useSelector((state) => state.authorization);
   const [values, setValues] = useState({
     title: '',
-    description: 'Photoshop',
+    description: '',
     files: [],
   });
   const dispatch = useDispatch();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formdata = new FormData();
 
@@ -167,6 +167,7 @@ const AddProject = () => {
     }
 
     formdata.append('PostInfo', `{\n  "description": "${values.description}",\n  "title": "${values.title}"\n}`);
+    dispatch(addProject(formdata, navigate, userId));
   };
 
   const handleChange = (event) => {

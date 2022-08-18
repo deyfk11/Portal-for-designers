@@ -2,10 +2,10 @@ import ProjectsService from 'services/ProjectsService';
 
 import { ADD_PROJECT, GET_PROJECTS_BY_ID, DELETE_PROJECT, GET_ALL_PROJECTS, GET_PROJECT } from './actionTypes';
 
-export const addProject = (values, navigate) => (dispatch) => (
+export const addProject = (values, navigate, userId) => (dispatch) => (
   ProjectsService.addProject(values).then((response) => {
     dispatch({ type: ADD_PROJECT, payload: response.data });
-    navigate('/profile');
+    navigate(`/profile/${userId}`);
   })
 );
 

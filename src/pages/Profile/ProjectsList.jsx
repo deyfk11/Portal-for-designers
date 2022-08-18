@@ -76,11 +76,12 @@ const IconsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 5px;
-  right: 8px;
+  top: 0px;
   z-index: 2;
   color: #FFFFFF;
-  width: 95%;
+  width: 100%;
+  border-radius: 15px 15px 0 0;
+  background-color: #000000;
 `;
 
 const ProjectsList = ({ projects, isEditMode, userId }) => {
